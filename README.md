@@ -276,6 +276,8 @@ venv\Scripts\lanhu-mcp.exe --transport http  # Windows
 
 `run-stdio.sh` 会自动进入项目目录、读取 `.env`，并以 stdio 方式启动 MCP 服务。适合 Cursor、Claude Code 等支持 `command` / `args` 配置的客户端按需拉起服务，无需手动常驻启动 HTTP 服务。
 
+📖 不依赖 Docker 的完整安装与注册步骤：[纯本地按需调用指南](LOCAL-STDIO.md)
+
 **Docker 运行：**
 ```bash
 docker-compose up -d              # 启动
@@ -895,6 +897,19 @@ set PLAYWRIGHT_CHROMIUM_DOWNLOAD_HOST=https://cdn.npmmirror.com/binaries/chrome-
 venv\Scripts\python.exe -m playwright install chromium
 ```
 Playwright 1.58+ 的 Chromium 使用 Chrome for Testing 路径，因此不能只设置旧的 `PLAYWRIGHT_DOWNLOAD_HOST`。一键安装脚本会自动配置双源，并兼容旧版 Playwright 和官方 CDN。
+</details>
+
+<details>
+<summary><b>Q: 不用 Docker，本地 Python 按需启动（stdio）有哪些注意事项？</b></summary>
+
+A: 
+1. 使用 Python 3.10–3.13（推荐 3.12），过新的版本可能缺少依赖的预编译包。
+2. 运行 `bash easy-install.sh` 创建 `venv` 并安装依赖与 Chromium；MCP 客户端配置里的 `command` 写 `run-stdio.sh` 的绝对路径，不要移动项目或删除 `venv`。
+3. Intel Mac 上 `pip install` 若因 `cryptography` 需要编译 Rust 而失败，请强制使用预编译包：
+```bash
+./venv/bin/python -m pip install --only-binary cryptography -e .
+```
+4. 修改 MCP 配置或 `.env` 后，需要重启会话或在客户端里重连 MCP 才会生效。
 </details>
 
 <details>

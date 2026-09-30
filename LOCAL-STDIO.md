@@ -61,6 +61,25 @@ claude mcp add lanhu -s user -e LANHU_USER_ROLE=Developer -e LANHU_USER_NAME=You
 
 > Windows 提示：若 Claude Code 无法直接拉起 `.bat`，把命令改为 `-- cmd /c <ABS_PATH>\run-stdio.bat`（此写法未实测）。项目建议放在不含中文和空格的路径下；Python 需从 python.org 安装并勾选 Add to PATH。
 
+**Claude Code（直接编辑配置文件）：** 也可以不用命令，直接编辑 `~/.claude.json`，在顶层 `mcpServers`（全局级）里加入：
+
+```json
+{
+  "mcpServers": {
+    "lanhu": {
+      "type": "stdio",
+      "command": "<ABS_PATH>/run-stdio.sh",
+      "args": [],
+      "env": { "LANHU_USER_ROLE": "Developer", "LANHU_USER_NAME": "YourName" }
+    }
+  }
+}
+```
+
+- 顶层 `mcpServers` 对所有项目生效；`projects.<路径>.mcpServers` 只对该项目生效。
+- 该文件可能还包含其他 MCP 服务的密钥，编辑时只改 `lanhu` 一项，分享或截图前务必脱敏。
+- 配置里是本机绝对路径，不适合写进随仓库提交的 `.mcp.json`。
+
 **Cursor 等（JSON）：** 见 [README.md](README.md) 中「按需启动配置示例」。
 
 注册后重启会话，或在客户端里重连 MCP。用 `claude mcp list` 可看到 `lanhu` 状态。

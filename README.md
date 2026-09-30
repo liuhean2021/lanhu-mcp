@@ -321,10 +321,8 @@ Linux/Mac
 {
   "mcpServers": {
     "lanhu": {
-      "command": "/bin/bash",
-      "args": [
-        "<ABSOLUTE_PATH_TO_LANHU_MCP>/run-stdio.sh"
-      ],
+      "command": "<ABSOLUTE_PATH_TO_LANHU_MCP>/run-stdio.sh",
+      "args": [],
       "env": {
         "LANHU_USER_NAME": "YourName",
         "LANHU_USER_ROLE": "Developer"
@@ -359,6 +357,7 @@ Windows
 > 📌 stdio 环境变量说明：
 > - `LANHU_USER_ROLE`: 用户角色（Developer/Frontend/Backend/Tester/Product 等）
 > - `LANHU_USER_NAME`: 用户姓名（用于协作追踪和 @提醒）
+> - `LANHU_DISABLE_SYSTEM_PROXY`: 设为 `1` 时，`run-stdio.sh` / `run-stdio.bat` 清除继承的代理并设置 `NO_PROXY=*`，一律直连（解决 IDE 注入 SOCKS 导致 httpx 失败）；各客户端统一配置见 [LOCAL-STDIO.md](LOCAL-STDIO.md)
 
 ## 🎯 提升 UI 还原度
 
@@ -910,6 +909,7 @@ A:
 ./venv/bin/python -m pip install --only-binary cryptography -e .
 ```
 4. 修改 MCP 配置或 `.env` 后，需要重启会话或在客户端里重连 MCP 才会生效。
+5. 依赖含 `socksio`；若 IDE 注入不可用 SOCKS 代理，可设 `LANHU_DISABLE_SYSTEM_PROXY=1`（见 [LOCAL-STDIO.md](LOCAL-STDIO.md)）。
 </details>
 
 <details>

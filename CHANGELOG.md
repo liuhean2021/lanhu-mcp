@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- `LOCAL-STDIO.md`: Docker-free local Python stdio guide (clone, install, verify, register with Claude Code / Cursor / opencode / Codex, including editing `~/.claude.json` directly).
+- `docs/review/`: pre-commit review notes for the stdio SOCKS proxy change.
+
 ### Fixed
 - Add `socksio` dependency; `run-stdio.sh` / `run-stdio.bat` support `LANHU_DISABLE_SYSTEM_PROXY=1` to clear inherited proxies and set `NO_PROXY=*` (direct connection, no OS-level proxy fallback) for local stdio.
 
